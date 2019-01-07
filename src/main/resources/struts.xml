@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+    <!--开启Struts2动态调用-->
+    <constant name="struts.enable.DynamicMethodInvocation" value="true"/>
+    <constant name="struts.action.extension" value="do,go"/>
+    <constant name="struts.i18n.encoding" value="UTF-8"/>
+    <constant name="struts.objectFactory" value="spring" />
+
+    <constant name="struts.devMode" value="true" />
+    <!--修改默认上传文件大小-->
+    <constant name="struts.multipart.maxSize" value="15000000"/>
+    <!-- 错误处理页面，其他配置文件可以继承这个package
+    <package name="default" namespace="/" extends="struts-default">-->
+        <!-- 全局结果集，所有action都可以使用
+        <global-results>
+            <result name="myerror">/page/error/myerror.jsp</result>
+            <result name="error">/page/error/error.jsp</result>
+        </global-results>
+        <global-exception-mappings>-->
+            <!-- 可以配置多个，如果捕获的异常类型不知道会被error2拦截 ，优先匹配明确类型的exception-->
+            <!-- 自定义异常
+            <exception-mapping result="myerror"	exception="cn.qlq.Exception.MyException"></exception-mapping>-->
+            <!-- 未知异常
+            <exception-mapping result="error" exception="java.lang.Exception"></exception-mapping>
+        </global-exception-mappings>
+    </package>-->
+
+
+
+    <package name="nec-default" extends="json-default"   namespace="/">
+        <global-results>
+            <result name="result" type="freemarker">/WEB-INF/pages/common/_result.html</result>
+            <result name="toRegistration" type="freemarker">/WEB-INF/pages/system/registerPage.html</result>
+            <result name="responseBean" type="freemarker">/WEB-INF/pages/common/_result.html</result>
+            <result name="error">/</result>
+        </global-results>
+        <!-- 关键地方  struts2.5 为了提升安全性新添加的属性 不添加无法实现动态调用-->
+        <global-allowed-methods>regex:.*</global-allowed-methods>
+
+        <!-- struts2异常处理框架 -->
+        <global-exception-mappings>
+            <exception-mapping result="error" exception="com.zhaols.SSMdome.MyExcption.MessageExcption"></exception-mapping>
+            <exception-mapping result="error" exception="java.lang.Exception"></exception-mapping>
+        </global-exception-mappings>
+        <!-- 全局结果视图 -->
+
+
+
+
+    </package>
+
+    <include file="action/loginAction.xml"/>
+    <include file="action/sys_Security.xml"/>
+    <include file="action/uploadFile.xml"/>
+    <include file="action/targetAction.xml"/>
+    <include file="action/blogAction.xml"/>
+</struts>

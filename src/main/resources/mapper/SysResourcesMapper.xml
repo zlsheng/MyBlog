@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhaols.SSMdome.mapper.SysResourcesMapper">
+  <resultMap id="ResultSysResourcesMap" type="com.zhaols.SSMdome.entity.SysResources">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="DISPLAY" jdbcType="VARCHAR" property="display" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="PARENT_CODE" jdbcType="VARCHAR" property="parentCode" />
+    <result column="TYPE" jdbcType="CHAR" property="type" />
+    <result column="URL" jdbcType="VARCHAR" property="url" />
+    <result column="STATUS" jdbcType="CHAR" property="status" />
+    <result column="UPDATOR" jdbcType="VARCHAR" property="updator" />
+    <result column="UPDATOR_NAME" jdbcType="VARCHAR" property="updatorName" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="CREATOR" jdbcType="VARCHAR" property="creator" />
+    <result column="CREATOR_NAME" jdbcType="VARCHAR" property="creatorName" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="SORT" jdbcType="DECIMAL" property="sort" />
+    <result column="ICON" jdbcType="VARCHAR" property="icon" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CODE, DISPLAY, DESCRIPTION, PARENT_CODE, TYPE, URL, STATUS, UPDATOR, UPDATOR_NAME,
+    UPDATE_TIME, CREATOR, CREATOR_NAME, CREATE_TIME, SORT, ICON
+  </sql>
+    <!--根据用户id获取权限信息-->
+    <select id="getSysResourceListByUid" resultMap="ResultSysResourcesMap" parameterType="java.lang.String">
+      SELECT * FROM Sys_Resources WHERE ID IN (
+            SELECT resource_id FROM sys_role_resources WHERE role_id IN (
+       SELECT role_id FROM sys_role_user WHERE user_id = #{userid,jdbcType=VARCHAR}
+       )
+) ORDER BY SORT
+  </select>
+    <!--根据用户id获取菜单信息-->
+    <select id="findMenuListByUserId" resultMap="ResultSysResourcesMap" parameterType="java.lang.String">
+       SELECT * FROM Sys_Resources WHERE ID IN (
+            SELECT resource_id FROM sys_role_resources WHERE role_id IN (
+       SELECT role_id FROM sys_role_user WHERE user_id = #{userid,jdbcType=VARCHAR}
+       )
+) and type in('1','2') ORDER BY SORT
+  </select>
+
+  <select id="getAll" resultMap="ResultSysResourcesMap">
+      SELECT * FROM Sys_Resources where STATUS = '0' ORDER BY SORT
+  </select>
+
+    <select id="queryResByUid" parameterType="String" resultMap="ResultSysResourcesMap">
+        SELECT * FROM Sys_Resources WHERE ID IN (
+            SELECT resource_id FROM sys_role_resources WHERE role_id IN (
+              SELECT role_id FROM sys_role_user WHERE user_id = #{userId}
+          )
+        )and STATUS = '0' ORDER BY SORT
+    </select>
+
+    <select id="queryResByRid" parameterType="String" resultMap="ResultSysResourcesMap">
+        SELECT * FROM Sys_Resources WHERE ID IN (
+            SELECT resource_id FROM sys_role_resources WHERE role_id = #{roleId}
+        )and STATUS = '0' ORDER BY SORT
+    </select>
+
+    <select id="clncelAuth" parameterType="java.util.HashMap">
+        DELETE FROM SYS_ROLE_RESOURCES WHERE ROLE_ID = #{roleId} AND RESOURCE_ID = #{resId}
+    </select>
+
+    <update id="addAuth" parameterType="java.util.Map">
+        insert into SYS_ROLE_RESOURCES (ROLE_ID,RESOURCE_ID)values (#{roleId},#{resId})
+    </update>
+</mapper>
