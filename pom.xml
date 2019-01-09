@@ -5,11 +5,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.zhaols.ssm</groupId>
-  <artifactId>SSMdome</artifactId>
+  <artifactId>MyBlog</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>war</packaging>
 
-  <name>SSMdome</name>
+  <name>MyBlog</name>
 
   <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -358,7 +358,7 @@
   </dependencies>
 
   <build>
-    <finalName>SSMdome</finalName>
+    <finalName>MyBlog</finalName>
     <pluginManagement>
       <plugins>
         <plugin>

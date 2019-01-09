@@ -64,7 +64,11 @@
 
     <filter-mapping>
         <filter-name>struts2</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>*.do</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>struts2</filter-name>
+        <url-pattern>*.go</url-pattern>
     </filter-mapping>
 
     <filter-mapping>
@@ -108,6 +112,6 @@
     </servlet-mapping>
     <welcome-file-list>
         <!--<welcome-file>/WEB-INF/pages/login/login.html</welcome-file>-->
-        <welcome-file>/index.jsp</welcome-file>
+        <welcome-file>/blog/blog_list.go</welcome-file>
     </welcome-file-list>
 </web-app>

@@ -24,6 +24,8 @@ public class BlogAction extends BasicAction<Blog, IBlogService> {
     @Override
     public String list(){
         System.out.println("haha");
-        return super.list();
+        super.list();
+        System.out.println(entitys.size());
+        return SUCCESS;
     }
 }

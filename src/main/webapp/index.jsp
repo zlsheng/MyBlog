@@ -1,1 +1,1 @@
-<% response.sendRedirect(request.getContextPath()+"/blog/blog_list.go"); %>
+123

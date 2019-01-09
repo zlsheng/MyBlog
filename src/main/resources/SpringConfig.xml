@@ -123,8 +123,9 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.
                 /admin/login_registration.do = anon
                 /images/kaptcha.jpg = anon
                 /admin/login_logout.do = logout
-                /*.go = anon
-                /*.do = authc,resourceCheckFilter
+                /admin/* = authc,resourceCheckFilter
+                /system/* = authc,resourceCheckFilter
+                /** = anon
             </value>
         </property>
     </bean>

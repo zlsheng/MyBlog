@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhaols.blog.mapper.BlogMapper">
-  <resultMap id="BaseResultMap" type="com.zhaols.blog.entity.Blog">
+  <resultMap id="BaseBlogMap" type="com.zhaols.blog.entity.Blog">
     <id column="ID" jdbcType="VARCHAR" property="id" />
     <result column="TITLE" jdbcType="VARCHAR" property="title" />
     <result column="INTRODUCTION" jdbcType="VARCHAR" property="introduction" />
@@ -21,7 +21,7 @@
     ID, TITLE, INTRODUCTION, READ_TIMES, STATUS, BLOGGER_ID, CATEGORY_ID, UPDATOR, UPDATOR_NAME, 
     UPDATE_TIME, CREATOR, CREATOR_NAME, CREATE_TIME, HEAD_PORTRAIT
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseBlogMap">
     select 
     <include refid="Base_Column_List" />
     from BLOG
@@ -168,27 +168,26 @@
     where ID = #{id,jdbcType=VARCHAR}
   </update>
   <sql id="sea_condition">
-    <if test="1 = 1 ">1=1</if>
   </sql>
-  <select id="select" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+  <select id="select" parameterType="java.util.HashMap" resultMap="BaseBlogMap">
       select
       <include refid="Base_Column_List" />
-      from BLOG where STATUS = '0' AND
+      from BLOG where STATUS = '0'
       <include refid="sea_condition"/>
   </select>
 
   <select id="count" parameterType="java.util.HashMap" resultType="int">
-    select count(1) from BLOG where STATUS = '0' AND
+    select count(1) from BLOG where STATUS = '0'
     <include refid="sea_condition"/>
   </select>
 
-  <select id="get" parameterType="java.util.HashMap" resultType="BaseResultMap">
+  <select id="get" parameterType="java.util.HashMap" resultMap="BaseBlogMap">
     select <include refid="Base_Column_List" /> from BLOG where ID = #{id}
 
   </select>
 
 
-  <select id="getAll"  resultMap="BaseResultMap">
+  <select id="getAll"  resultMap="BaseBlogMap">
     select
     <include refid="Base_Column_List" />
     from BLOG where STATUS = '0'
